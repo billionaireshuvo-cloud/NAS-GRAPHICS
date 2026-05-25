@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAS GRAPHICS | Premium Design Marketplace</title>
+    <style>
+        :root {
+            --primary-blue: #0062ff;
+            --white: #ffffff;
+            --bg-gray: #f4f7fa;
+            --text-dark: #2d3436;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--bg-gray); color: var(--text-dark); overflow-x: hidden; }
+
+        /* Header */
+        header {
+            background: var(--white); padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase; cursor: pointer; }
+
+        /* Sections Visibility Control */
+        #home-page, #details-page { width: 100%; transition: 0.3s; }
+        #details-page { display: none; }
+
+        /* Hero Section */
+        .hero-container {
+            position: relative;
+            background: #000; 
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-banner {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            content: url("file:///C:/Users/Win%2010/OneDrive/Documents/Code/NAS%20GRAPHICS/benner1.png");
+        }
+
+        .hero-content {
+            position: absolute;
+            z-index: 10;
+            color: white;
+            width: 100%;
+        }
+
+        .hero-content h1 { font-size: 50px; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.6); }
+        .hero-content p { font-size: 18px; margin-bottom: 25px; opacity: 0.9; }
+
+        /* Search Box */
+        .search-box {
+            display: flex; background: var(--white); border-radius: 50px;
+            overflow: hidden; max-width: 550px; margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .search-box input { flex: 1; border: none; padding: 15px 25px; outline: none; font-size: 16px; }
+        .search-box button { background: var(--primary-blue); color: white; border: none; padding: 0 25px; cursor: pointer; font-weight: 700; }
+
+        /* Phone Fix for Banner */
+        @media (max-aspect-ratio: 1/1) {
+            .hero-container { display: block; background: #000; }
+            .main-banner {
+                content: url("file:///C:/Users/Win%2010/OneDrive/Documents/Code/NAS%20GRAPHICS/benner2.png");
+                height: auto;
+                max-height: 70vh;
+                object-fit: contain;
+                position: relative;
+            }
+            .hero-content { position: relative; margin-top: -30px; }
+            .hero-content h1, .hero-content p { display: none; }
+        }
+
+        /* Product Grid */
+        .container { padding: 40px 5%; max-width: 1300px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .product-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); }
+        .product-img { width: 100%; height: 180px; object-fit: cover; }
+
+        /* Details Page Specific Styles */
+        .back-link { 
+            display: inline-block; margin-bottom: 15px; color: var(--primary-blue); 
+            cursor: pointer; font-weight: 600; text-decoration: none; padding: 8px 15px; border-radius: 5px; background: #fff; border: 1px solid #eee;
+        }
+        .product-wrapper {
+            display: grid; grid-template-columns: 100px 1.5fr 1fr; gap: 20px;
+            background: var(--white); padding: 30px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px;
+        }
+        .thumbnail-list { display: flex; flex-direction: column; gap: 15px; }
+        .thumb { width: 80px; height: 80px; border-radius: 8px; border: 2px solid #eee; cursor: pointer; object-fit: cover; }
+        .thumb.active { border-color: var(--primary-blue); }
+        .main-display { text-align: center; }
+        .main-display img { width: 100%; max-height: 500px; border-radius: 12px; object-fit: contain; background: #fafafa; border: 1px solid #f0f0f0; }
+        .details-side { display: flex; flex-direction: column; justify-content: space-between; }
+        .price-tag { font-size: 32px; font-weight: 800; color: var(--primary-blue); margin-bottom: 15px; display: block; }
+        .payment-btn { background: var(--primary-blue); color: white; border: none; padding: 18px; border-radius: 10px; font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .payment-btn:hover { background: #004ecc; }
+        .file-info { background: #fdfdfd; border: 1px dashed #ccc; padding: 15px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; color: #555; line-height: 1.6; }
+
+        @media (max-width: 900px) {
+            .product-wrapper { grid-template-columns: 1fr; }
+            .thumbnail-list { flex-direction: row; order: 2; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .product-img { height: 130px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo" onclick="showHome()">NAS GRAPHICS</div>
+</header>
+
+<div id="home-page">
+    <section class="hero-container">
+        <img src="" class="main-banner">
+        <div class="hero-content">
+            <h1>NAS GRAPHICS</h1>
+            <p>Premium Design Marketplace for Professionals</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search templates...">
+                <button>SEARCH</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <h2 style="margin-bottom:25px;">Latest Designs</h2>
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+</div>
+
+<div id="details-page">
+    <div class="container">
+        <div class="back-link" onclick="showHome()">← Back to Home</div>
+        
+        <div class="product-wrapper">
+            <div class="thumbnail-list" id="thumbGroup"></div>
+            <div class="main-display">
+                <img id="main-img" src="" alt="Design Preview">
+            </div>
+            <div class="details-side">
+                <div>
+                    <h1 id="main-title">Loading...</h1>
+                    <span class="price-tag" id="main-price">৳0</span>
+                    <div class="file-info">
+                        <strong>About This File:</strong> <br>
+                        - Premium Quality PSD / Vector File<br>
+                        - Resolution: 300 DPI (Print Ready)<br>
+                        - Fully Editable Layers & Text
+                    </div>
+                </div>
+                <button class="payment-btn">PAYMENT NOW</button>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom:20px; padding-top:20px; border-top:2px solid #eee;">More Designs for You</h2>
+        <div class="product-grid" id="relatedGrid"></div>
+    </div>
+</div>
+
+<script>
+    const products = [
+        { id: 1, title: "Corporate Business Card", old: "1000", new: "500", img: "https://picsum.photos/seed/1/400/300" },
+        { id: 2, title: "Event Campaign Poster", old: "1200", new: "600", img: "https://picsum.photos/seed/2/400/300" },
+        { id: 3, title: "Social Media Post Pack", old: "800", new: "400", img: "https://picsum.photos/seed/3/400/300" },
+        { id: 4, title: "Premium Logo Template", old: "1500", new: "750", img: "https://picsum.photos/seed/4/400/300" },
+        { id: 5, title: "Modern Restaurant Flyer", old: "900", new: "450", img: "https://picsum.photos/seed/5/400/300" },
+        { id: 6, title: "YouTube Thumbnail Kit", old: "500", new: "250", img: "https://picsum.photos/seed/6/400/300" },
+        { id: 7, title: "Wedding Invitation Design", old: "1100", new: "550", img: "https://picsum.photos/seed/7/400/300" },
+        { id: 8, title: "Company Profile Layout", old: "2000", new: "1000", img: "https://picsum.photos/seed/8/400/300" }
+    ];
+
+    // Render Home Page Products
+    function renderHome() {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = "";
+        products.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.onclick = () => showDetails(p);
+            card.innerHTML = `
+                <img src="${p.img}" class="product-img">
+                <div style="padding:12px;">
+                    <h3 style="font-size:14px; height:35px; overflow:hidden;">${p.title}</h3>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                        <span style="font-weight:800;">৳${p.new}</span>
+                        <span style="color:var(--primary-blue); font-size:12px; font-weight:700;">Details →</span>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Render Related Products in Details Page
+    function renderRelated() {
+        const grid = document.getElementById('relatedGrid');
+        grid.innerHTML = "";
+        products.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.onclick = () => showDetails(p);
+            card.innerHTML = `
+                <img src="${p.img}" class="product-img">
+                <div style="padding:12px;">
+                    <h3 style="font-size:14px; height:35px; overflow:hidden;">${p.title}</h3>
+                    <span style="font-weight:800; color:var(--primary-blue);">৳${p.new}</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function showDetails(product) {
+        document.getElementById('home-page').style.display = 'none';
+        document.getElementById('details-page').style.display = 'block';
+        
+        document.getElementById('main-title').innerText = product.title;
+        document.getElementById('main-price').innerText = "৳" + product.new;
+        document.getElementById('main-img').src = product.img;
+
+        // Thumbnails
+        const thumbGroup = document.getElementById('thumbGroup');
+        thumbGroup.innerHTML = "";
+        for(let i=0; i<3; i++) {
+            const img = document.createElement('img');
+            img.className = i === 0 ? 'thumb active' : 'thumb';
+            img.src = product.img;
+            img.onclick = function() {
+                document.getElementById('main-img').src = this.src;
+                document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            };
+            thumbGroup.appendChild(img);
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        renderRelated();
+    }
+
+    function showHome() {
+        document.getElementById('home-page').style.display = 'block';
+        document.getElementById('details-page').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initial Load
+    renderHome();
+</script>
+
+</body>
+</html>
